@@ -1,14 +1,16 @@
-export const saveUsernameToAPI = (username: string) => {
+import { action } from "./_generated/server";
+import { v } from "convex/values";
+
+
+export const getUserData = action({
+  
+  args: { username: v.string(), offset: v.int64()},
+  handler: async (args) => {
+    const { username, offset } = args;
     console.log(`Sending the username ${username} to the server...`);
-  
-    // fetch('/api/save-username', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ username })
-    // });
-
-
-
-    //send raw data to userinfo's infoProccesser
-  }
-  
+    const data = await fetch(`https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status&limit=100&offset=${offset}`);
+    return data;
+    // do something with data
+    
+  },
+});
