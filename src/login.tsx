@@ -5,6 +5,7 @@ import { api } from "../convex/_generated/api";
 // Import the UserDataDisplay component
 import UserDataDisplay from './content.tsx';
 import "./login.css";
+import {parse } from '../convex/userinfo.ts'
 
 const Login = () => {
   const [username, setUsername] = useState<string>('');
@@ -33,6 +34,7 @@ const Login = () => {
         setError("Invalid username.");
         return;
       }
+      parse(username);
     });
     // After saving the username, set the state to show UserDataDisplay
     setShowUserDataDisplay(true);
