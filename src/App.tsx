@@ -3,11 +3,14 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
 } from 'react-router-dom';
 import LoadingPage from './login';
 
+
 const HomePage = () => {
+  
+
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
       <div className="text-center">

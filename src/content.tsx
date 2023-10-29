@@ -29,7 +29,9 @@ const UserDataDisplay: React.FC = () => {
   const [selectedButtonFMK3, setSelectedButtonFMK3] = useState<string | null>(null);
   const [selectedButtonAnimeCon, setSelectedButtonAnimeCon] = useState<string | null>(null);
   const [selectedButtonHighRatedOnHold, setSelectedButtonHighRatedOnHold] = useState<string | null>(null);
-  
+
+
+
   useEffect(() => {
     if (showFinalScore) {
       setTimeout(() => {
