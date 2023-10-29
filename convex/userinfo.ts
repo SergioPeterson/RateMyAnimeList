@@ -1,5 +1,4 @@
-import React from "react";
-import { useAction, useQueries, useQuery } from "convex/react";
+import { useAction, useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 
 
@@ -39,10 +38,23 @@ export function MyApp() {
 
  const performGetUserData = useAction(api.Api_call.getUserData);
  const performGetAnimeData = useAction(api.Api_call.getAnimeData);
+ const genreFreqDict: Record<string, number> = {};
+ const userParams: Record<string, any> = {
+  "lowest_rated_show": "",
+  "highest_disparity": "",
+  "top_nice_show":"", 
+  "top_normie_show":"",
+  "last_show_added": "",
+  "top_show_not_mentioned_yet":"",
+  "top_5_show":[],
+  "top_5_genre":[]
+  }
+ const performSetAnimeToDB = useMutation(api.Api_call.saveAnimeToDB);
+
 
  const parse = async (userName: string) => {
    const userAnimeListInfo: Record<number, userInfo> = {};
-   const animeInfo: Record<number, animeInfo> = {};
+   const animeInfoDic: Record<number, animeInfo> = {};
    let iter = 0;
      const dataPromise = Promise.resolve(performGetUserData({username : userName, offset: iter}));
      dataPromise.then((jason) => {
@@ -61,16 +73,24 @@ export function MyApp() {
            const animeId:number = animeNode.id;
            userAnimeListInfo[animeId] = d.list_status;
 
-           animeInfo[animeId] = parseAnime(animeId);
+           animeInfoDic[animeId] = parseAnime(animeId);
            if (!databaseContains(animeId)){
-             saveToDatabase(animeInfo);
+             saveToDatabase(animeInfoDic[animeId]);
            }
          }
        iter+=100;
        }
-     })
+     })  
+    const userAnimeListArray = Object.entries(userAnimeListInfo);
+    userAnimeListArray.sort((a, b) => b[1].score - a[1].score);
+    const sortedAnimeIds = userAnimeListArray.map(([animeId]) => parseInt(animeId));
+    
+    userParams["lowest_rated_show"] = ;
+    const genreFreqArray = Object.entries(genreFreqDict);
+    genreFreqArray.sort((a, b) => b[1] - a[1]);
+    userParams["top_5_genre"] = genreFreqArray.slice(0, 5); 
+    userParams["top_5_show"] = sortedAnimeIds.slice(0,5);
  }
-
 
  const parseAnime = (animeId: number) => {
    const dataPromise = Promise.resolve(performGetAnimeData({id: animeId}));
@@ -91,16 +111,20 @@ export function MyApp() {
  };
 
 
-
  const databaseContains = (animeId: number) => {
    // Implement the logic to check if the animeId exists in your database
-   const performGetAnimeFromDB = useQuery(api.Api_call.findAnime, {id: animeId});
-   const animePromise = Promise.resolve(performGetAnimeFromDB)
-   return true;
+   const performGetAnimeFromDB = useQuery(api.Api_call.findAnimeFromDB, {id: animeId});
+   const animePromise = Promise.resolve(performGetAnimeFromDB);
+   animePromise.then((data) => {
+    return true;
+   })
+   return false;
+
  };
 
 
- const saveToDatabase = (data: Record<number, animeInfo>) => {
+ const saveToDatabase = (data: animeInfo) => {
    // Implement the logic to save data to your database
+   const savePromise = Promise.resolve(performSetAnimeToDB({animeinfo : data}));
  };
 }
