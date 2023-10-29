@@ -1,6 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect } from 'react';
+import Login from './login'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate
+} from 'react-router-dom';
 
-const LoadingPage = () => {
+
+
+
+const Loading = () => {
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     navigate('/login');
+  //   }, 5000); // Change 5000 (5 seconds) to desired delay
+
+  //   return () => clearTimeout(timer); // Clean up the timer on unmount
+  // }, [navigate]);
+
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
       <div>
@@ -13,4 +34,35 @@ const LoadingPage = () => {
   );
 }
 
-export default LoadingPage;
+
+
+
+
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Loading />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default Loading;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
