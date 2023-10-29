@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import FinalPage from './finalpage';
 import "./content.css";
 
@@ -29,7 +29,8 @@ const UserDataDisplay: React.FC = () => {
   const [selectedButtonFMK3, setSelectedButtonFMK3] = useState<string | null>(null);
   const [selectedButtonAnimeCon, setSelectedButtonAnimeCon] = useState<string | null>(null);
   const [selectedButtonHighRatedOnHold, setSelectedButtonHighRatedOnHold] = useState<string | null>(null);
-  const [selectedButtonIronic, setSelectedButtonIronic] = useState<string | null>(null);
+  // const [selectedButtonIronic, setSelectedButtonIronic] = useState<string | null>(null);
+  const scrollToRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (showFinalScore) {
@@ -56,6 +57,14 @@ const UserDataDisplay: React.FC = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+//   useEffect(() => {
+//     if (showYesOkComponent && scrollToRef.current) {
+//         scrollToRef.current.scrollIntoView({ behavior: 'smooth' });
+//     }
+// }, [showYesOkComponent]);
+
+
 
   const handleHighRatedOnHoldResponse = (response: boolean) => {
     setDidWatchHighRatedPart(response);
@@ -139,14 +148,15 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
   }
 
   if (showFinalPage) {
-      return <FinalPage />;
-    }
+    return <FinalPage userData={data} />;
+}
+
 
     return (
       <div className="content">
   
           {showLowestRatedQuestion && (
-              <div className="question-container">
+              <div className="question-container"  ref={scrollToRef}>
                   <p>
                       Loading your anime watch list... this might take a minute or two. If nothing loads in 3 minutes try again later...
                       <br />
@@ -163,7 +173,7 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
                       okay hold on 
                       <br />
                       <br />
-                      Do you really like to {data['Higest Disparaty'] ? data['Higest Disparaty'].toString() : '(Higest Disparaty)'}?
+                      Do you really like to {data['highest_disparaty'] ? data['highest_disparaty'].toString() : '(Higest Disparaty)'}?
                   </p>
                   <div className="button-group">
                       <button  
@@ -200,21 +210,30 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
 
   
           {showUOkayQuestion && (
-              <div className="question-container">
-                  <p>
+    <div className="question-container" ref={scrollToRef}>
+    <p>
                       Cool . . .
                       <br />
                       <br />
-                      Seeing a lot of data {data['Top genara'] ? data['Top genara'].toString() : '(Top genara)'}
+                      Seeing a lot of data {data['top_5_genre'] ? data['top_5_genre'].toString() : '(Top genara)'}
+                      {/* Seeing a lot of data {data['top_5_genre'][0] ? data['top_5_genre'][0].toString() : '(Top genara)'} */}
                       <br />
                       <br />
-                      Finding a lot of {data['Top artist'] ? data['Top artist'].toString() : '(Top artist)'}?
+                      Finding a lot of {data['top_5_show'] ? data['top_5_show'].toString() : '(Top Show)'}?
+                      {/* Finding a lot of {data['top_5_show'][0] ? data['top_5_show'][0].toString() : '(Top Show)'}? */}
                       <br />
                       <br />
                       Like. . . A LOT
                       <br />
                       <br />
-                      oh boy {data['top song'] ? data['Top song'].toString() : '(Top song)'} by {data['Top song artist'] ? data['Top song artist'].toString() : '(Top song artist)'}??
+                      oh boy {data['top_nice_show'] ? data['top_nice_show'].toString() : '(top_nice_show)'}
+                      <br />
+                      <br />
+                      oh great another {data['top_normie_show'] ? data['top_normie_show'].toString() : '(top_normie_show)'}
+                      <br />
+                      <br />
+                      You have been watching a lot of {data['last_show_added'] ? data['last_show_added'].toString() : '(last_show_added)'} lately. <br />
+                      you ok?
                   </p>
                   <div className="button-group">
                       <button 
@@ -230,20 +249,20 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
                   </div>
               </div>
           )}{showYesOkComponent && (
-            <div className="question-container">
-                <p className="mb-4">no reason...</p>
+            <div className="question-container" ref={scrollToRef}>
+            <p className="mb-4">no reason...</p>
             </div>
         )}
 
         {showNoOkComponent && (
             <div className="question-container">
-                <p className="mb-4">listen im just a </p>
+                <p className="mb-4">listen i'm just a neural net do what you gotta do</p>
             </div>
         )}
 
 {showFMKChoices && (
-    <div className="question-container">
-        <p className="mb-4">of course . . . <br /> now quick choose Fuck Marry Kill</p>
+    <div className="question-container" ref={scrollToRef}>
+        <p className="mb-4">of course{data['top_show_not_mentioned_yet'] ? data['top_show_not_mentioned_yet'].toString() : '(top_show_not_mentioned_yet)'} <br /> now quick choose Fuck Marry Kill</p>
         <div className="fmk-container">
             <div>
                 <img src="./character1.png" alt="character1" />
@@ -306,26 +325,26 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
 
 
           {showAnimeConQuestion && (
-              <div className="question-container">
-                  <p>Oh you <br />Have you been to anime con?</p>
+    <div className="question-container" ref={scrollToRef}>
+    <p>Oh you <br />Have you been to Anime Expo?</p>
                   <div className="button-group"> 
                       <button 
                           className={selectedButtonAnimeCon === 'yes_animecon' ? 'button-selected' : (selectedButtonAnimeCon ? 'button-unselected' : 'button-normal')} 
                           onClick={() => { setSelectedButtonAnimeCon('yes_animecon'); handleAnimeConAnswer(); }}>
-                          Yea
+                          Yea why?
                       </button>
                       <button 
                           className={selectedButtonAnimeCon === 'no_animecon' ? 'button-selected' : (selectedButtonAnimeCon ? 'button-unselected' : 'button-normal')} 
                           onClick={() => { setSelectedButtonAnimeCon('no_animecon'); handleAnimeConAnswer(); }}>
-                          No
+                          Not really
                       </button>
                   </div>
               </div>
           )}
 
           {showHighRatedOnHoldQuestion && (
-              <div className="question-container">
-                  <p>clearly <br />You should really finish {data['Highest rated on hold'] ? data['Highest rated on hold'].toString() : '(highest rated on hold)'} you know... <br/>Did you get to the part where (spoil something about show with LLM)?</p>
+    <div className="question-container" ref={scrollToRef}>
+    <p>clearly ...  it shows <br />You should really finish {data['highest_rated_on_hold'] ? data['highest_rated_on_hold'].toString() : '(highest_rated_on_hold)'} you know... <br/>Did you get to the part where {data['spiler'] ? data['spiler'].toString() : '(spiler)'} ?</p>
                   <div className="button-group"> 
                       <button 
                           className={selectedButtonHighRatedOnHold === 'yes_highrated' ? 'button-selected' : (selectedButtonHighRatedOnHold ? 'button-unselected' : 'button-normal')} 
