@@ -29,8 +29,7 @@ const UserDataDisplay: React.FC = () => {
   const [selectedButtonFMK3, setSelectedButtonFMK3] = useState<string | null>(null);
   const [selectedButtonAnimeCon, setSelectedButtonAnimeCon] = useState<string | null>(null);
   const [selectedButtonHighRatedOnHold, setSelectedButtonHighRatedOnHold] = useState<string | null>(null);
-
-
+  const [selectedButtonIronic, setSelectedButtonIronic] = useState<string | null>(null);
 
   useEffect(() => {
     if (showFinalScore) {
@@ -63,7 +62,16 @@ const UserDataDisplay: React.FC = () => {
     setShowFinalScore(true)
    };
 
-   
+   const handleYesIronic = () => {
+    // Add any action you'd like to execute when "lol yea" is selected
+    setShowYesOkComponent(true);  // Example action
+    };
+
+    const handleNoIronic = () => {
+        // Add any action you'd like to execute when "no.." is selected
+        setShowNoOkComponent(true);  // Example action
+    };
+
   const handleYesFirst = () => {
     setShowYesIronicComponent(true);
     setShowUOkayQuestion(true);
@@ -155,7 +163,7 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
                       okay hold on 
                       <br />
                       <br />
-                      Do you really like to {data['Lowest rated'] ? data['Lowest rated'].toString() : '(Lowest rated)'}?
+                      Do you really like to {data['Higest Disparaty'] ? data['Higest Disparaty'].toString() : '(Higest Disparaty)'}?
                   </p>
                   <div className="button-group">
                       <button  
@@ -172,28 +180,41 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
               </div>
           )}
   
-          {showYesIronicComponent && (
+            {/* {showYesIronicComponent && (
               <div className="question-container">
                   <p className="mb-4">Like Ironically?</p>
+                  <div className="button-group">
+                      <button 
+                          className={selectedButtonIronic === 'yes_ironic' ? 'button-selected' : (selectedButtonIronic ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonIronic('yes_ironic'); handleYesIronic(); }}>
+                          lol yea
+                      </button>
+                      <button 
+                          className={selectedButtonIronic === 'no_ironic' ? 'button-selected' : (selectedButtonIronic ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonIronic('no_ironic'); handleNoIronic(); }}>
+                          no..
+                      </button>
+                  </div>
               </div>
-          )}
+          )} */}
+
   
           {showUOkayQuestion && (
-              <div className="">
+              <div className="question-container">
                   <p>
                       Cool . . .
                       <br />
                       <br />
-                      Seeing a lot of . . .
+                      Seeing a lot of data {data['Top genara'] ? data['Top genara'].toString() : '(Top genara)'}
                       <br />
                       <br />
-                      Finding a lot of . . .
+                      Finding a lot of {data['Top artist'] ? data['Top artist'].toString() : '(Top artist)'}?
                       <br />
                       <br />
-                      Like a lot . . .
+                      Like. . . A LOT
                       <br />
                       <br />
-                      U okay?
+                      oh boy {data['top song'] ? data['Top song'].toString() : '(Top song)'} by {data['Top song artist'] ? data['Top song artist'].toString() : '(Top song artist)'}??
                   </p>
                   <div className="button-group">
                       <button 
@@ -220,71 +241,68 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
             </div>
         )}
 
-        {showFMKChoices && (
-            <div className="">
-                <p className="mb-4">of course . . . <br /> now quick choose Fuck Marry Kill</p>
-                <div className="fmk-container">
-
-                    <div>
-                        {/* <img src="./character1.png" alt="character1" /> */}
-                        <button 
-                          className={selectedButtonFMK1 === 'fuck1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK1('fuck1'); handleFMKChoiceForCharacter1('Fuck'); }}>
-                            Fuck
-                        </button>
-                        <button 
-                          className={selectedButtonFMK1 === 'marry1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK1('marry1'); handleFMKChoiceForCharacter1('Marry'); }}>
-                            Marry
-                        </button>
-                        <button 
-                          className={selectedButtonFMK1 === 'kill1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK1('kill1'); handleFMKChoiceForCharacter1('Kill'); }}>
-                            Kill
-                        </button>
-                    </div>
-
-                    <div>
-                        {/* <img src="./character2.png" alt="character2" /> */}
-                        <button 
-                          className={selectedButtonFMK2 === 'fuck2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK2('fuck2'); handleFMKChoiceForCharacter2('Fuck'); }}>
-                            Fuck
-                        </button>            
-                        <button 
-                          className={selectedButtonFMK2 === 'marry2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK2('marry2'); handleFMKChoiceForCharacter2('Marry'); }}>
-                            Marry
-                        </button>            
-                        <button 
-                          className={selectedButtonFMK2 === 'kill2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK2('kill2'); handleFMKChoiceForCharacter2('Kill'); }}>
-                            Kill
-                        </button>
-                    </div>
-
-                    <div>
-                        {/* <img src="./character3.png" alt="character3" /> */}
-                        <button 
-                          className={selectedButtonFMK3 === 'fuck3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK3('fuck3'); handleFMKChoiceForCharacter3('Fuck'); }}>
-                            Fuck
-                        </button>
-                        <button 
-                          className={selectedButtonFMK3 === 'marry3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK3('marry3'); handleFMKChoiceForCharacter3('Marry'); }}>
-                            Marry
-                        </button>
-                        <button 
-                          className={selectedButtonFMK3 === 'kill3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
-                          onClick={() => { setSelectedButtonFMK3('kill3'); handleFMKChoiceForCharacter3('Kill'); }}>
-                            Kill
-                        </button>
-                    </div>
-
-                </div>
+{showFMKChoices && (
+    <div className="question-container">
+        <p className="mb-4">of course . . . <br /> now quick choose Fuck Marry Kill</p>
+        <div className="fmk-container">
+            <div>
+                <img src="./character1.png" alt="character1" />
+                <button 
+                  className={selectedButtonFMK1 === 'fuck1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK1('fuck1'); handleFMKChoiceForCharacter1('Fuck'); }}>
+                    Fuck
+                </button>
+                <button 
+                  className={selectedButtonFMK1 === 'marry1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK1('marry1'); handleFMKChoiceForCharacter1('Marry'); }}>
+                    Marry
+                </button>
+                <button 
+                  className={selectedButtonFMK1 === 'kill1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK1('kill1'); handleFMKChoiceForCharacter1('Kill'); }}>
+                    Kill
+                </button>
             </div>
-        )}
+            <div>
+                <img src="./character2.png" alt="character2" />
+                <button 
+                  className={selectedButtonFMK2 === 'fuck2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK2('fuck2'); handleFMKChoiceForCharacter2('Fuck'); }}>
+                    Fuck
+                </button>            
+                <button 
+                  className={selectedButtonFMK2 === 'marry2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK2('marry2'); handleFMKChoiceForCharacter2('Marry'); }}>
+                    Marry
+                </button>            
+                <button 
+                  className={selectedButtonFMK2 === 'kill2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK2('kill2'); handleFMKChoiceForCharacter2('Kill'); }}>
+                    Kill
+                </button>
+            </div>
+            <div>
+                <img src="./character3.png" alt="character3" />
+                <button 
+                  className={selectedButtonFMK3 === 'fuck3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK3('fuck3'); handleFMKChoiceForCharacter3('Fuck'); }}>
+                    Fuck
+                </button>
+                <button 
+                  className={selectedButtonFMK3 === 'marry3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK3('marry3'); handleFMKChoiceForCharacter3('Marry'); }}>
+                    Marry
+                </button>
+                <button 
+                  className={selectedButtonFMK3 === 'kill3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
+                  onClick={() => { setSelectedButtonFMK3('kill3'); handleFMKChoiceForCharacter3('Kill'); }}>
+                    Kill
+                </button>
+            </div>
+        </div>
+    </div>
+)}
+
 
 
           {showAnimeConQuestion && (
