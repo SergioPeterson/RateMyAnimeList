@@ -1,6 +1,6 @@
-export const infoProccesser = (data: *idk*) => {
-    console.log(`Sending the username ${data} to the server...`);
+export const infoProccesser = (data: JSON) => {
+    console.log(`Analyszing json.`);
   
-
+  
     //send data to userData.json
   }
