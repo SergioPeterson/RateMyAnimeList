@@ -3,7 +3,7 @@ import FinalPage from './finalpage';
 import "./content.css";
 
 interface UserData {
-  [key: string]: any;
+  [key: string]: any; 
 }
 
 const UserDataDisplay: React.FC = () => {
@@ -22,6 +22,13 @@ const UserDataDisplay: React.FC = () => {
   const [showFinalPage, setShowFinalPage] = useState(false); // New state for showing the FinalPage
   const [showHighRatedOnHoldQuestion, setShowHighRatedOnHoldQuestion] = useState(false);
   const [didWatchHighRatedPart, setDidWatchHighRatedPart] = useState<boolean | null>(null);
+  const [selectedButtonLowestRated, setSelectedButtonLowestRated] = useState<string | null>(null);
+  const [selectedButtonUOkay, setSelectedButtonUOkay] = useState<string | null>(null);
+  const [selectedButtonFMK1, setSelectedButtonFMK1] = useState<string | null>(null);
+  const [selectedButtonFMK2, setSelectedButtonFMK2] = useState<string | null>(null);
+  const [selectedButtonFMK3, setSelectedButtonFMK3] = useState<string | null>(null);
+  const [selectedButtonAnimeCon, setSelectedButtonAnimeCon] = useState<string | null>(null);
+  const [selectedButtonHighRatedOnHold, setSelectedButtonHighRatedOnHold] = useState<string | null>(null);
   
   useEffect(() => {
     if (showFinalScore) {
@@ -114,7 +121,7 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
         <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
+          {/* <span className="sr-only">Loading...</span> */}
         </div>
         <p className="mt-2 text-center">Loading...</p>
       </div>
@@ -125,133 +132,216 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
       return <FinalPage />;
     }
 
-  return (
-    <div>
-       {showLowestRatedQuestion && (
-        <div>
-          <p>
-            Loading your anime watch list... this might take a minute or two. If nothing loads in 3 minutes try again later...
-            <br />
-            <br />
-            Analyzing your watch history ...
-            <br />
-            <br />
-            lol
-            <br />
-            <br />
-            omg
-            <br />
-            <br />
-            okay hold on 
-            <br />
-            <br />
-            Do you really like to {data['Lowest rated'] ? data['Lowest rated'].toString() : '(Lowest rated)'}?
-          </p>  
-          <button id="yes_first" onClick={handleYesFirst}>Yes</button>
-          <button id="no_first" onClick={handleNoFirst}>No</button>
-        </div>
-      )}
+    return (
+      <div className="content">
+  
+          {showLowestRatedQuestion && (
+              <div className="question-container">
+                  <p>
+                      Loading your anime watch list... this might take a minute or two. If nothing loads in 3 minutes try again later...
+                      <br />
+                      <br />
+                      Analyzing your watch history ...
+                      <br />
+                      <br />
+                      lol
+                      <br />
+                      <br />
+                      omg
+                      <br />
+                      <br />
+                      okay hold on 
+                      <br />
+                      <br />
+                      Do you really like to {data['Lowest rated'] ? data['Lowest rated'].toString() : '(Lowest rated)'}?
+                  </p>
+                  <div className="button-group">
+                      <button  
+                          className={selectedButtonLowestRated === 'yes_first' ? 'button-selected' : (selectedButtonLowestRated ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonLowestRated('yes_first'); handleYesFirst(); }}>
+                          Yes
+                      </button>
+                      <button 
+                          className={selectedButtonLowestRated === 'no_first' ? 'button-selected' : (selectedButtonLowestRated ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonLowestRated('no_first'); handleNoFirst(); }}>
+                          No
+                      </button>
+                  </div>
+              </div>
+          )}
+  
+          {showYesIronicComponent && (
+              <div className="question-container">
+                  <p className="mb-4">Like Ironically?</p>
+              </div>
+          )}
+  
+          {showUOkayQuestion && (
+              <div className="">
+                  <p>
+                      Cool . . .
+                      <br />
+                      <br />
+                      Seeing a lot of . . .
+                      <br />
+                      <br />
+                      Finding a lot of . . .
+                      <br />
+                      <br />
+                      Like a lot . . .
+                      <br />
+                      <br />
+                      U okay?
+                  </p>
+                  <div className="button-group">
+                      <button 
+                          className={selectedButtonUOkay === 'yes_uokay' ? 'button-selected' : (selectedButtonUOkay ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonUOkay('yes_uokay'); handleYesUOkay(); }}>
+                          Yea why?
+                      </button>
+                      <button 
+                          className={selectedButtonUOkay === 'no_uokay' ? 'button-selected' : (selectedButtonUOkay ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonUOkay('no_uokay'); handleNoUOkay(); }}>
+                          Not really
+                      </button>
+                  </div>
+              </div>
+          )}{showYesOkComponent && (
+            <div className="question-container">
+                <p className="mb-4">no reason...</p>
+            </div>
+        )}
 
-      {showYesIronicComponent && (
-        <div>
-          <p className="mb-4">Like Ironically?</p>
-        </div>
-      )}
+        {showNoOkComponent && (
+            <div className="question-container">
+                <p className="mb-4">listen im just a </p>
+            </div>
+        )}
 
-      {showUOkayQuestion && (
-        <div>
-          <p>
-            Cool . . .
-            <br />
-            <br />
-            Seeing a lot of . . .
-            <br />
-            <br />
-            Finding a lot of . . .
-            <br />
-            <br />
-            Like a lot . . .
-            <br />
-            <br />
-            U okay?
-          </p>  
-          <button onClick={handleYesUOkay}>Yea why?</button>
-          <button onClick={handleNoUOkay}>Not really</button>
-        </div>
-      )}
+        {showFMKChoices && (
+            <div className="">
+                <p className="mb-4">of course . . . <br /> now quick choose Fuck Marry Kill</p>
+                <div className="fmk-container">
 
-      {showYesOkComponent && (
-        <div>
-          <p className="mb-4">no reason...</p>
-        </div>
-      )}
+                    <div>
+                        {/* <img src="./character1.png" alt="character1" /> */}
+                        <button 
+                          className={selectedButtonFMK1 === 'fuck1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK1('fuck1'); handleFMKChoiceForCharacter1('Fuck'); }}>
+                            Fuck
+                        </button>
+                        <button 
+                          className={selectedButtonFMK1 === 'marry1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK1('marry1'); handleFMKChoiceForCharacter1('Marry'); }}>
+                            Marry
+                        </button>
+                        <button 
+                          className={selectedButtonFMK1 === 'kill1' ? 'button-selected' : (selectedButtonFMK1 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK1('kill1'); handleFMKChoiceForCharacter1('Kill'); }}>
+                            Kill
+                        </button>
+                    </div>
 
-      {showNoOkComponent && (
-        <div>
-          <p className="mb-4">listen im just a </p>
-        </div>
-      )}
+                    <div>
+                        {/* <img src="./character2.png" alt="character2" /> */}
+                        <button 
+                          className={selectedButtonFMK2 === 'fuck2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK2('fuck2'); handleFMKChoiceForCharacter2('Fuck'); }}>
+                            Fuck
+                        </button>            
+                        <button 
+                          className={selectedButtonFMK2 === 'marry2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK2('marry2'); handleFMKChoiceForCharacter2('Marry'); }}>
+                            Marry
+                        </button>            
+                        <button 
+                          className={selectedButtonFMK2 === 'kill2' ? 'button-selected' : (selectedButtonFMK2 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK2('kill2'); handleFMKChoiceForCharacter2('Kill'); }}>
+                            Kill
+                        </button>
+                    </div>
 
-      {showFMKChoices && (
-        <div>
-          <p className="mb-4">of course . . . <br /> now quick choose Fuck Marry Kill</p>
-          <div>
-            {/* <img src="./character1.png" alt="character1" /> */}
-            <button onClick={() => handleFMKChoiceForCharacter1('Fuck')}>Fuck</button>
-            <button onClick={() => handleFMKChoiceForCharacter1('Marry')}>Marry</button>
-            <button onClick={() => handleFMKChoiceForCharacter1('Kill')}>Kill</button>
-          </div>
-          <div>
-            {/* <img src="./character2.png" alt="character2" /> */}
-            <button onClick={() => handleFMKChoiceForCharacter2('Fuck')}>Fuck</button>
-            <button onClick={() => handleFMKChoiceForCharacter2('Marry')}>Marry</button>
-            <button onClick={() => handleFMKChoiceForCharacter2('Kill')}>Kill</button>
-          </div>
-          <div>
-            {/* <img src="./character3.png" alt="character3" /> */}
-            <button onClick={() => handleFMKChoiceForCharacter3('Fuck')}>Fuck</button>
-            <button onClick={() => handleFMKChoiceForCharacter3('Marry')}>Marry</button>
-            <button onClick={() => handleFMKChoiceForCharacter3('Kill')}>Kill</button>
-          </div>
-        </div>
-      )}
+                    <div>
+                        {/* <img src="./character3.png" alt="character3" /> */}
+                        <button 
+                          className={selectedButtonFMK3 === 'fuck3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK3('fuck3'); handleFMKChoiceForCharacter3('Fuck'); }}>
+                            Fuck
+                        </button>
+                        <button 
+                          className={selectedButtonFMK3 === 'marry3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK3('marry3'); handleFMKChoiceForCharacter3('Marry'); }}>
+                            Marry
+                        </button>
+                        <button 
+                          className={selectedButtonFMK3 === 'kill3' ? 'button-selected' : (selectedButtonFMK3 ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonFMK3('kill3'); handleFMKChoiceForCharacter3('Kill'); }}>
+                            Kill
+                        </button>
+                    </div>
 
-      {showAnimeConQuestion && (
-        <div>
-          <p>Oh you <br />Have you been to anime con?</p>
-          <button onClick={handleAnimeConAnswer}>Yea</button>
-          <button onClick={handleAnimeConAnswer}>No</button>
-        </div>
-      )}
-
-      {showHighRatedOnHoldQuestion && (
-          <div>
-              <p>clearly <br />You should really finish {data['Highest rated on hold'] ? data['Highest rated on hold'].toString() : '(highest rated on hold)'} you know... <br/>Did you get to the part where (spoil something about show with LLM)?</p>
-              <button onClick={() => handleHighRatedOnHoldResponse(true)}>Yea</button>
-              <button onClick={() => handleHighRatedOnHoldResponse(false)}>No</button>
-          </div>
-      )}
-
-      {didWatchHighRatedPart === true && (
-          <div>
-              <p>And that didn’t keep you watching? Wow</p>
-          </div>
-      )}
-
-      {didWatchHighRatedPart === false && (
-          <div>
-              <p>Oh... my bad...</p>
-          </div>
-      )}
+                </div>
+            </div>
+        )}
 
 
-      {showFinalScore && (
-        <div>
-          <p>Well this is interesting <br /> let's get to your final score</p>
-        </div>
-      )}
+          {showAnimeConQuestion && (
+              <div className="question-container">
+                  <p>Oh you <br />Have you been to anime con?</p>
+                  <div className="button-group"> 
+                      <button 
+                          className={selectedButtonAnimeCon === 'yes_animecon' ? 'button-selected' : (selectedButtonAnimeCon ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonAnimeCon('yes_animecon'); handleAnimeConAnswer(); }}>
+                          Yea
+                      </button>
+                      <button 
+                          className={selectedButtonAnimeCon === 'no_animecon' ? 'button-selected' : (selectedButtonAnimeCon ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonAnimeCon('no_animecon'); handleAnimeConAnswer(); }}>
+                          No
+                      </button>
+                  </div>
+              </div>
+          )}
+
+          {showHighRatedOnHoldQuestion && (
+              <div className="question-container">
+                  <p>clearly <br />You should really finish {data['Highest rated on hold'] ? data['Highest rated on hold'].toString() : '(highest rated on hold)'} you know... <br/>Did you get to the part where (spoil something about show with LLM)?</p>
+                  <div className="button-group"> 
+                      <button 
+                          className={selectedButtonHighRatedOnHold === 'yes_highrated' ? 'button-selected' : (selectedButtonHighRatedOnHold ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonHighRatedOnHold('yes_highrated'); handleHighRatedOnHoldResponse(true); }}>
+                          Yea
+                      </button>
+                      <button 
+                          className={selectedButtonHighRatedOnHold === 'no_highrated' ? 'button-selected' : (selectedButtonHighRatedOnHold ? 'button-unselected' : 'button-normal')} 
+                          onClick={() => { setSelectedButtonHighRatedOnHold('no_highrated'); handleHighRatedOnHoldResponse(false); }}>
+                          No
+                      </button>
+                  </div>
+              </div>
+          )}
+
+
+        {didWatchHighRatedPart === true && (
+            <div className="question-container">
+                <p>And that didn’t keep you watching? Wow</p>
+            </div>
+        )}
+
+        {didWatchHighRatedPart === false && (
+            <div className="question-container">
+                <p>Oh... my bad...</p>
+            </div>
+        )}
+
+        {showFinalScore && (
+            <div className="question-container">
+                <p>Well this is interesting <br /> let's get to your final score</p>
+            </div>
+        )}
+
     </div>
-  );
+);
 }
 
 export default UserDataDisplay;

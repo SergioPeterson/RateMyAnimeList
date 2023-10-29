@@ -3,7 +3,7 @@ import "./finalpage.css";
 
 const FinalPage = () => {
   return (
-        <div>
+        <div className='content'>
             <h1>&#62; Your Anime Taste was (Stuff) bad.</h1>
             <p>&#62; Thank your obsessions with Mitski, (I've Had) The Time of My Life <br />- From "Dirty Dancing" Soundtrack, and Eminem for that. <br />
             &#62;Based on your listening habits, I can also tell you your Spotify was... 

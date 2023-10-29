@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: large;
+  }
+.content {
+    padding: 5% 10%;
+}
+.button-group {
+display: flex;
+justify-content: center;
+gap: 10px;  /* provides spacing between the buttons */
+}  
+.button-selected {
+    background-color: #908f8f;  /* green when selected */
+    color: #000;  /* black text */
+  }
+  
+.button-unselected {
+background-color: #e9e9e9;  /* red for other buttons in the same group */
+color: #000;  /* white text */
+}
+
+.button-normal {
+background-color: #c2c2c2;  /* grey for default state */
+color: #000;  /* black text */
+}
+
+button{
+    padding: 1px 4px;
+    margin: 3px;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+.fmk-container {
+    display: flex;
+    justify-content: space-between;  /* Distribute divs with equal space */
+    gap: 20px;  /* Add some gap between divs */
+}
+
+.character-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;  /* Space between image and buttons */
+}
+
+.question-container {
+    display: flex;                 /* Use flexbox */
+    justify-content: space-between; /* Push content apart: text to the left and buttons to the right */
+    align-items: center;           /* Vertically align items in the center */
+    gap: 20px;                     /* Space between text and buttons */
+}
