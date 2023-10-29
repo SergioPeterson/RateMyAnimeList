@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { saveUsernameToAPI } from '../convex/Api_call';
+// import { parseUser } from '../convex/userinfo.ts';
 // Import the UserDataDisplay component
 import UserDataDisplay from './content.tsx';
 import "./login.css";
@@ -15,7 +15,7 @@ const Login = () => {
   }
 
   const saveUsername = () => {
-    saveUsernameToAPI(username);
+    // parseUser(username);
     // After saving the username, set the state to show UserDataDisplay
     setShowUserDataDisplay(true);
   }
@@ -50,7 +50,7 @@ const LoadingPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogin(true);
-    }, 3000); 
+    }, 500); 
 
     return () => clearTimeout(timer);
   }, []);
