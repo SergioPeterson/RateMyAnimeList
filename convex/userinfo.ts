@@ -1,5 +1,5 @@
 import React from "react";
-import { useAction, useQueries, useQuery } from "convex/react";
+import { useAction, useQueries, useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 
 
@@ -39,6 +39,8 @@ export function MyApp() {
 
  const performGetUserData = useAction(api.Api_call.getUserData);
  const performGetAnimeData = useAction(api.Api_call.getAnimeData);
+ const performSetAnimeToDB = useMutation(api.Api_call.saveAnimeToDB);
+
 
  const parse = async (userName: string) => {
    const userAnimeListInfo: Record<number, userInfo> = {};
@@ -63,7 +65,7 @@ export function MyApp() {
 
            animeInfo[animeId] = parseAnime(animeId);
            if (!databaseContains(animeId)){
-             saveToDatabase(animeInfo);
+             saveToDatabase(animeInfo[animeId]);
            }
          }
        iter+=100;
@@ -94,13 +96,18 @@ export function MyApp() {
 
  const databaseContains = (animeId: number) => {
    // Implement the logic to check if the animeId exists in your database
-   const performGetAnimeFromDB = useQuery(api.Api_call.findAnime, {id: animeId});
-   const animePromise = Promise.resolve(performGetAnimeFromDB)
-   return true;
+   const performGetAnimeFromDB = useQuery(api.Api_call.findAnimeFromDB, {id: animeId});
+   const animePromise = Promise.resolve(performGetAnimeFromDB);
+   animePromise.then((data) => {
+    return true;
+   })
+   return false;
+
  };
 
 
- const saveToDatabase = (data: Record<number, animeInfo>) => {
+ const saveToDatabase = (data: animeInfo) => {
    // Implement the logic to save data to your database
+   const savePromise = Promise.resolve(performSetAnimeToDB({animeinfo : data}));
  };
 }

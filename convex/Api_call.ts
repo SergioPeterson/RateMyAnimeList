@@ -1,5 +1,7 @@
-import { action, query} from "./_generated/server";
+import { action, query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+
+
 
 function censor(censor : any) {
   var i = 0;
@@ -50,7 +52,7 @@ export const getAnimeData = action({
   },
 });
 
-export const findAnime = query({
+export const findAnimeFromDB = query({
   args: { id: v.number() }, 
   handler: async (ctx, args) => {
     const anime = await ctx.db
@@ -60,4 +62,20 @@ export const findAnime = query({
     return anime;
   },
 });
-
+  
+ export const saveAnimeToDB = mutation({
+  args: {animeinfo : v.object({id: v.number(),
+    title: v.string(),
+    start_date: v.string(),
+    synopsis: v.string(),
+    mean: v.number(),
+    rank: v.number(),
+    popularity: v.number(),
+    nsfw: v.string(),
+    picture: v.string(),
+    genres: v.array(v.number())})},
+  handler: async (ctx, args) => {
+    const animeID = await ctx.db.insert("animes", args.animeinfo);
+    return animeID;
+  }
+ });
