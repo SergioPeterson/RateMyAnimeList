@@ -1,5 +1,5 @@
 import React from "react";
-import { useAction } from "convex/react";
+import { useAction, useQueries, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
 
 
@@ -22,6 +22,7 @@ export function MyApp() {
 
  interface animeInfo {
    //following should be autosorted by JSONParse
+   id:number;
    title:string;
    start_date:string;
    synopsis:string;
@@ -38,7 +39,6 @@ export function MyApp() {
 
  const performGetUserData = useAction(api.Api_call.getUserData);
  const performGetAnimeData = useAction(api.Api_call.getAnimeData);
-
 
  const parse = async (userName: string) => {
    const userAnimeListInfo: Record<number, userInfo> = {};
@@ -60,6 +60,7 @@ export function MyApp() {
            const animeNode = d.node;
            const animeId:number = animeNode.id;
            userAnimeListInfo[animeId] = d.list_status;
+
            animeInfo[animeId] = parseAnime(animeId);
            if (!databaseContains(animeId)){
              saveToDatabase(animeInfo);
@@ -72,7 +73,7 @@ export function MyApp() {
 
 
  const parseAnime = (animeId: number) => {
-   const dataPromise = Promise.resolve(performGetAnimeData({animeId}));
+   const dataPromise = Promise.resolve(performGetAnimeData({id: animeId}));
    dataPromise.then((jason)=>{
      const animeInfoJSON = JSON.parse(jason);
      const animeI : animeInfo = JSON.parse(jason);
@@ -86,11 +87,15 @@ export function MyApp() {
      animeI.genres = g;
      return animeI;   
    })
+   return {} as animeInfo;
  };
+
 
 
  const databaseContains = (animeId: number) => {
    // Implement the logic to check if the animeId exists in your database
+   const performGetAnimeFromDB = useQuery(api.Api_call.findAnime, {id: animeId});
+   const animePromise = Promise.resolve(performGetAnimeFromDB)
    return true;
  };
 
