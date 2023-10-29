@@ -1,5 +1,4 @@
-import React from "react";
-import { useAction, useQueries, useQuery, useMutation } from "convex/react";
+import { useAction, useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 
 
