@@ -1,30 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "./content.css";
-
 interface UserData {
   [key: string]: any;
 }
 
-const Yes1 = () => {
-    return (
-      <div>
-      <p className="mb-4">Like Ironically? </p>
-      </div>
-    );
-}
-
-const No1 = () => {
-    return (
-      <p className="mb-4">No</p> 
-      );
-}
-
 const UserDataDisplay: React.FC = () => {
   const [data, setData] = useState<UserData | null>(null);
-  const [appendedContent, setAppendedContent] = useState<('YES' | 'NO') | null>(null);
-  const [selectedButton, setSelectedButton] = useState<('YES' | 'NO') | null>(null);
-
-
+  const [appendedContent, setAppendedContent] = useState<string | null>(null);
+  const [clickedButtonID, setClickedButtonID] = useState<string | null>(null);
+  
   useEffect(() => {
     // Function to fetch user data
     const fetchUserData = async () => {
@@ -46,16 +30,109 @@ const UserDataDisplay: React.FC = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // Handle button clicks
-  const handleYesClick = () => {
-    
-    setAppendedContent('YES');
-    setSelectedButton('YES');
+
+  const handleYesClick = (id: string) => {
+    setClickedButtonID(id);
+    if (id === "yes_first") {
+      setAppendedContent("first_yes");
+    } else if (id === "Yes_1") {
+      setAppendedContent("second_Yes");
+    }else if (id === "...") {
+      setAppendedContent("...");
+    }else if (id === "...") {
+      setAppendedContent("...");
+    }else if (id === "...") {
+      setAppendedContent("...");
+    }
   }
-  const handleNoClick = () => {
-    setAppendedContent('NO');
-    setSelectedButton('NO');
+
+
+
+  const handleNoClick = (id: string) => {
+    setClickedButtonID(id);
+    if (id === "no_first") {
+      setAppendedContent("first_No");
+    } else if (id === "No_Ironically") {
+      setAppendedContent("second_No");
+    } else if (id === "...") {
+      setAppendedContent("...");
+    }else if (id === "...") {
+      setAppendedContent("...");
+    }else if (id === "...") {
+      setAppendedContent("...");
+    }
   }
+
+
+
+/**
+ * 
+ * First Condition
+ * 
+ */
+  const first_yes = () => (
+    <div>
+      <p className="mb-4">first_yes</p>
+      <button id='Yes_1' onClick={() => handleYesClick("Yes_1")}>Yes</button>
+      <button id='No_1' onClick={() => handleNoClick("No_1")}>No</button>
+    </div>
+  );
+
+  const first_No = () => (
+    <div>
+      <p className="mb-4">first_No</p>
+      <button id='Yes_2' onClick={() => handleYesClick("Yes_2")}>Yes</button>
+      <button id='No_2' onClick={() => handleNoClick("No_2")}>No</button>
+    </div>
+  );
+
+
+
+
+/**
+ * 
+ * Second Condition
+ * 
+ */
+  const second_yes = () => (
+    <div>
+      <p className="mb-4">second_yes</p>
+      <button id='Yes_3' onClick={() => handleYesClick("Yes_3")}>Yes</button>
+      <button id='No_3' onClick={() => handleNoClick("No_3")}>No</button>
+    </div>
+  );
+
+  const second_No = () => (
+    <div>
+      <p className="mb-4">second_No</p>
+      <button id='Yes_4' onClick={() => handleYesClick("Yes_4")}>Yes</button>
+      <button id='No_4' onClick={() => handleNoClick("No_4")}>No</button>
+    </div>
+  );
+
+
+
+/**
+ * 
+ * Theird Condition
+ * 
+ */
+const theird_yes = () => (
+  <div>
+    <p className="mb-4">theird_yes</p>
+    <button id='...' onClick={() => handleYesClick(" ... ")}>Yes</button>
+    <button id='...' onClick={() => handleNoClick(" ... ")}>No</button>
+  </div>
+);
+
+const theird_No = () => (
+  <div>
+    <p className="mb-4">theird_No</p>
+    <button id=' ... ' onClick={() => handleYesClick(" ... ")}>Yes</button>
+    <button id=' ... ' onClick={() => handleNoClick(" ... ")}>No</button>
+  </div>
+);
+
 
   if (!data) {
     return (
@@ -72,41 +149,29 @@ const UserDataDisplay: React.FC = () => {
 
   return (
     <div>
-    <p>
-      Loading your anime watch list... this might take a minute or two. If nothing loads in 3 minutes try again later...
-      <br />
-      <br />
-      Analyzing your watch history ...
-      <br />
-      <br />
-      lol
-      <br />
-      <br />
-      omg
-      <br />
-      <br />
-      okay hold on 
-      <br />
-      <br />
-      Do you really like to {data['Lowest rated'] ? data['Lowest rated'].toString() : '(Lowest rated)'}?
-    </p>  
-      <button 
-        className={`yes ${selectedButton === 'YES' ? 'selected' : ''}`}
-        onClick={handleYesClick}
-        disabled={selectedButton !== null}
-      >
-        Yes
-      </button>
-      <button 
-        className={`no ${selectedButton === 'NO' ? 'selected' : ''}`}
-        onClick={handleNoClick}
-        disabled={selectedButton !== null}
-      >
-        No
-      </button>
-
-      {appendedContent === 'YES' && <Yes1 />}
-      {appendedContent === 'NO' && <No1 />}
+      <p>
+        Loading your anime watch list... this might take a minute or two. If nothing loads in 3 minutes try again later...
+        <br />
+        <br />
+        Analyzing your watch history ...
+        <br />
+        <br />
+        lol
+        <br />
+        <br />
+        omg
+        <br />
+        <br />
+        okay hold on 
+        <br />
+        <br />
+        Do you really like to {data['Lowest rated'] ? data['Lowest rated'].toString() : '(Lowest rated)'}?
+      </p>  
+      <button id="yes_first" onClick={() => handleYesClick("yes_first")}>Yes</button>
+      <button id="no_first" onClick={() => handleNoClick("no_first")}>No</button>
+      {appendedContent === "first_yes" && first_yes()}
+      {appendedContent === "first_No" && first_No()}
+      {/* ... render other content based on appendedContent value ... */}
     </div>
   );
 }
