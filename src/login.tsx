@@ -34,7 +34,7 @@ const Login = () => {
         setError("Invalid username.");
         return;
       }
-      parse(username);
+      // parse(username);
     });
     // After saving the username, set the state to show UserDataDisplay
     setShowUserDataDisplay(true);

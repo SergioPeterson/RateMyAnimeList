@@ -1,6 +1,6 @@
 import { useAction, useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
-import * as fs from 'fs';
+// import * as fs from 'fs';
 
 // const getUserInfo:JSON = useAction(api.myFunctions.getUserInfo);
 // const getAnimeInfo:JSON = useAction(api.myFunctions.getAnimeInfo);
@@ -37,6 +37,7 @@ interface animeInfo {
 
 const performGetUserData = useAction(api.Api_call.getUserData);
 const performGetAnimeData = useAction(api.Api_call.getAnimeData);
+
 const genreFreqDict: Record<string, number> = {};
 const userParams: Record<string, any> = {
 "lowest_rated_show": "",
@@ -101,14 +102,16 @@ const performSetAnimeToDB = useMutation(api.Api_call.saveAnimeToDB);
 
   const jsonData = JSON.stringify(userParams, null, 2);
 
-  fs.writeFile('userData.json', jsonData, (err) => {
-  if (err) {
-    console.error('Error saving userData.json:', err);
-  }
-  else {
-    console.log('userData.json has been saved.');
-  }
-});
+// Generate a blob from the JSON string
+const blob = new Blob([jsonData], { type: "application/json" });
+// Create a link element
+const url = URL.createObjectURL(blob);
+const a = document.createElement("a");
+a.href = url;
+a.download = "userData.json";
+a.click();  // This will start the download
+URL.revokeObjectURL(url);  // Clean up
+
 }
 
 const parseAnime = (animeId: number) => {
