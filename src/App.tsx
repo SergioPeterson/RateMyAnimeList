@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import LoadingPage from './loading';
+import LoadingPage from './login';
 
 const HomePage = () => {
   return (
