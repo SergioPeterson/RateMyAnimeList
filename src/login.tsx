@@ -1,16 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { saveUsernameToAPI } from '../convex/Api_call'
+import { saveUsernameToAPI } from '../convex/Api_call';
+// Import the UserDataDisplay component
+import UserDataDisplay from './content.tsx';
+import "./login.css";
 
 const Login = () => {
   const [username, setUsername] = useState<string>('');
+  // State to determine if UserDataDisplay should be shown
+  const [showUserDataDisplay, setShowUserDataDisplay] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   }
 
   const saveUsername = () => {
-    saveUsernameToAPI(username);  // Use the function from APIcall.ts instead of local storage
+    saveUsernameToAPI(username);
+    // After saving the username, set the state to show UserDataDisplay
+    setShowUserDataDisplay(true);
+  }
+
+  // If the state is true, render the UserDataDisplay component
+  if (showUserDataDisplay) {
+    return <UserDataDisplay/>;
   }
 
   return (
@@ -38,7 +50,7 @@ const LoadingPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogin(true);
-    }, 5000); 
+    }, 3000); 
 
     return () => clearTimeout(timer);
   }, []);
