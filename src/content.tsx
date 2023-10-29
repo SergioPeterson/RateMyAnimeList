@@ -215,12 +215,12 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
                       Cool . . .
                       <br />
                       <br />
-                      Seeing a lot of data {data['top_5_genre'] ? data['top_5_genre'].toString() : '(Top genara)'}
-                      {/* Seeing a lot of data {data['top_5_genre'][0] ? data['top_5_genre'][0].toString() : '(Top genara)'} */}
+                      {/* Seeing a lot of data {data['top_5_genre'] ? data['top_5_genre'].toString() : '(Top genara)'} */}
+                      Seeing a lot of {data && data['top_5_genre'] && data['top_5_genre'][0] ? data['top_5_genre'][0].toString() : '(Top genara)'}
                       <br />
                       <br />
-                      Finding a lot of {data['top_5_show'] ? data['top_5_show'].toString() : '(Top Show)'}?
-                      {/* Finding a lot of {data['top_5_show'][0] ? data['top_5_show'][0].toString() : '(Top Show)'}? */}
+                      {/* Finding a lot of {data['top_5_show'] ? data['top_5_show'].toString() : '(Top Show)'}? */}
+                      Finding a lot of {data && data['top_5_show'] && data['top_5_show'][0] ? data['top_5_show'][0].toString() : '(Top Show)'}?
                       <br />
                       <br />
                       Like. . . A LOT
