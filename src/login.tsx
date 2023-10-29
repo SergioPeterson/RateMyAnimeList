@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-// import { parseUser } from '../convex/userinfo.ts';
+import { useAction } from "convex/react";
+import { api } from "../convex/_generated/api";
 // Import the UserDataDisplay component
 import UserDataDisplay from './content.tsx';
 import "./login.css";
@@ -14,8 +15,14 @@ const Login = () => {
     setUsername(event.target.value);
   }
 
+  const performGetUserData = useAction(api.Api_call.getUserData);
+
   const saveUsername = () => {
-    // parseUser(username);
+    console.log(username);
+    const dataPromise = Promise.resolve(performGetUserData({username: username, offset: 0}));
+    dataPromise.then((data) => {
+      console.log(data);
+    });
     // After saving the username, set the state to show UserDataDisplay
     setShowUserDataDisplay(true);
   }
