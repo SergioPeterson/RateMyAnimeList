@@ -1,6 +1,6 @@
 import { useAction, useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
-
+import * as fs from 'fs';
 
 export function MyApp() {
  // const getUserInfo:JSON = useAction(api.myFunctions.getUserInfo);
@@ -84,12 +84,32 @@ export function MyApp() {
     const userAnimeListArray = Object.entries(userAnimeListInfo);
     userAnimeListArray.sort((a, b) => b[1].score - a[1].score);
     const sortedAnimeIds = userAnimeListArray.map(([animeId]) => parseInt(animeId));
-    
-    userParams["lowest_rated_show"] = ;
+    const sortedAnimes = [];
+     for (const x of sortedAnimeIds){
+      sortedAnimes.push(animeInfoDic[x].title);
+    }
+
+    userParams["lowest_rated_show"] = sortedAnimes[-1];
     const genreFreqArray = Object.entries(genreFreqDict);
     genreFreqArray.sort((a, b) => b[1] - a[1]);
     userParams["top_5_genre"] = genreFreqArray.slice(0, 5); 
-    userParams["top_5_show"] = sortedAnimeIds.slice(0,5);
+    userParams["top_5_show"] = sortedAnimes.slice(0,5);
+    userParams["highest_disparity"] = sortedAnimes[-2],
+    userParams["top_nice_show"] = sortedAnimes[2], 
+    userParams["top_normie_show"]=sortedAnimes[3],
+    userParams["last_show_added"]=sortedAnimes[4],
+    userParams["top_show_not_mentioned_yet"]=sortedAnimes[5]
+
+    const jsonData = JSON.stringify(userParams, null, 2);
+
+    fs.writeFile('userData.json', jsonData, (err) => {
+    if (err) {
+      console.error('Error saving userData.json:', err);
+    }
+    else {
+      console.log('userData.json has been saved.');
+    }
+  });
  }
 
  const parseAnime = (animeId: number) => {
