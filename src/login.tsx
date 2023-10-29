@@ -28,6 +28,11 @@ const Login = () => {
     const dataPromise = Promise.resolve(performGetUserData({username: username, offset: 0}));
     dataPromise.then((data) => {
       console.log(data);
+      if (data.hasOwnProperty("error")) {
+        setShowUserDataDisplay(false);
+        setError("Invalid username.");
+        return;
+      }
     });
     // After saving the username, set the state to show UserDataDisplay
     setShowUserDataDisplay(true);
