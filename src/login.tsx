@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { useAction } from "convex/react";
-import { api } from "../convex/_generated/api";
+// import { useAction } from "convex/react";
+// import { api } from "../convex/_generated/api";
 // Import the UserDataDisplay component
 import UserDataDisplay from './content.tsx';
 import "./login.css";
-import {parse } from '../convex/userinfo.ts'
+// import {parse } from '../convex/userinfo.ts'
+import { setUserData, setUserFav } from '../convex/getAPIcall.ts';
 
 const Login = () => {
   const [username, setUsername] = useState<string>('');
@@ -18,27 +19,38 @@ const Login = () => {
     setError(null); // Clear the error when user types
   }
 
-  const performGetUserData = useAction(api.Api_call.getUserData);
+  // const performGetUserData = useAction(api.Api_call.getUserData);
 
-  const saveUsername = () => {
-    if (!username.trim()) { // Check if username is empty or just spaces
+  const saveUsername = async () => {
+    if (!username.trim()) {
       setError("Please enter a username.");
       return;
     }
     console.log(username);
-    const dataPromise = Promise.resolve(performGetUserData({username: username, offset: 0}));
-    dataPromise.then((data) => {
-      console.log(data);
-      if (data.hasOwnProperty("error")) {
-        setShowUserDataDisplay(false);
-        setError("Invalid username.");
-        return;
-      }
-      // parse(username);
-    });
-    // After saving the username, set the state to show UserDataDisplay
-    setShowUserDataDisplay(true);
+    if (await setUserData(username)){
+      setUserFav(username)
+      setShowUserDataDisplay(true);
+    }else{
+      setShowUserDataDisplay(false);
+      setError("Invalid username.");
+      console.error('Error fetching user by username', error);
+      throw error
+    }
   }
+
+    // const dataPromise = Promise.resolve(performGetUserData({username: username, offset: 0}));
+    // dataPromise.then((data) => {
+    //   console.log(data);
+    //   if (data.hasOwnProperty("error")) {
+    //     setShowUserDataDisplay(false);
+    //     setError("Invalid username.");
+    //     return;
+    //   }
+    //   // parse(username);
+    // });
+    // // After saving the username, set the state to show UserDataDisplay
+    // setShowUserDataDisplay(true);
+  
 
   // If the state is true, render the UserDataDisplay component
   if (showUserDataDisplay) {

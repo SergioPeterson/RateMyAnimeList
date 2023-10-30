@@ -1,5 +1,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import FinalPage from './finalpage';
+import {getUserData} from '../convex/getAPIcall'
 import "./content.css";
 
 interface UserData {
@@ -43,18 +44,16 @@ const UserDataDisplay: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('../convex/userData.json');
-        if (response.ok) {
-          const jsonData: UserData = await response.json();
-          setData(jsonData);
-        }
+        const jsonData: UserData = await getUserData();
+        setData(jsonData);
+        console.log(jsonData)
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
+  
     const intervalId = setInterval(fetchUserData, 2000);
-
+  
     return () => clearInterval(intervalId);
   }, []);
 
@@ -173,7 +172,7 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
                       okay hold on 
                       <br />
                       <br />
-                      Do you really like to {data['highest_disparaty'] ? data['highest_disparaty'].toString() : '(Higest Disparaty)'}?
+                      Do you really like to {data.peronsal_data.data.gender ? data.peronsal_data.data.gender.toString() : '(Higest Disparaty)'}?
                   </p>
                   <div className="button-group">
                       <button  
