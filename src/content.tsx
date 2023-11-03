@@ -30,7 +30,7 @@ const UserDataDisplay: React.FC = () => {
   const [selectedButtonFMK3, setSelectedButtonFMK3] = useState<string | null>(null);
   const [selectedButtonAnimeCon, setSelectedButtonAnimeCon] = useState<string | null>(null);
   const [selectedButtonHighRatedOnHold, setSelectedButtonHighRatedOnHold] = useState<string | null>(null);
-  // const [selectedButtonIronic, setSelectedButtonIronic] = useState<string | null>(null);
+  const [selectedButtonIronic, setSelectedButtonIronic] = useState<string | null>(null);
   const scrollToRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -172,7 +172,8 @@ const handleFMKChoiceForCharacter3 = (choice: string) => {
                       okay hold on 
                       <br />
                       <br />
-                      Do you really like to {data.peronsal_data.data.gender ? data.peronsal_data.data.gender.toString() : '(Higest Disparaty)'}?
+                      Do you really like to {data['highest_disparaty'] ? data['highest_disparaty'].toString() : '(Higest Disparaty)'}?
+                      {/* Do you really like to {data.peronsal_data.data.gender ? data.peronsal_data.data.gender.toString() : '(Higest Disparaty)'}? */}
                   </p>
                   <div className="button-group">
                       <button  
