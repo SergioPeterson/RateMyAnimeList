@@ -31,12 +31,9 @@ interface animeInfo {
   //will have to do some nesting stuff
   picture:string;
   genres:Array<number>;
-  //recommendations:Array<number>
+  //recommendations:Array<number> 
 }
 
-
-const performGetUserData = useAction(api.Api_call.getUserData);
-const performGetAnimeData = useAction(api.Api_call.getAnimeData);
 
 const genreFreqDict: Record<string, number> = {};
 const userParams: Record<string, any> = {
@@ -49,10 +46,12 @@ const userParams: Record<string, any> = {
 "top_5_show":[],
 "top_5_genre":[]
 }
-const performSetAnimeToDB = useMutation(api.Api_call.saveAnimeToDB);
+// const performSetAnimeToDB = useMutation(api.Api_call.saveAnimeToDB);
 
 
   export const parse = async (userName: string) => {
+
+    const performGetUserData = useAction(api.Api_call.getUserData);
   const userAnimeListInfo: Record<number, userInfo> = {};
   const animeInfoDic: Record<number, animeInfo> = {};
   let iter = 0;
@@ -115,6 +114,7 @@ URL.revokeObjectURL(url);  // Clean up
 }
 
 const parseAnime = (animeId: number) => {
+  const performGetAnimeData = useAction(api.Api_call.getAnimeData);
   const dataPromise = Promise.resolve(performGetAnimeData({id: animeId}));
   dataPromise.then((jason)=>{
     const animeInfoJSON = JSON.parse(jason);
@@ -146,6 +146,7 @@ const databaseContains = (animeId: number) => {
 
 
 const saveToDatabase = (data: animeInfo) => {
+  const performSetAnimeToDB = useMutation(api.Api_call.saveAnimeToDB);
   // Implement the logic to save data to your database
   const savePromise = Promise.resolve(performSetAnimeToDB({animeinfo : data}));
 };

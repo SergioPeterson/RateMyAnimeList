@@ -6,10 +6,11 @@ export const getUserData = action({
   args: { username: v.string(), offset: v.number() },
   handler: async (_, args) => {
     console.log(`Sending the username ${args.username} to the server...`);
-    const apiKey = process.env.MAL_API_KEY!;
+    // const apiKey = process.env.MAL_API_KEY!;
+    const apiKey = '75bc845bc2ee074f39b293319e4d2814'
     const headers = {
       'Content-Type': 'application/json',
-      'X-MAL-CLIENT-ID': apiKey,
+      'X-MAL-CLIENT-ID': '75bc845bc2ee074f39b293319e4d2814',
     }
     console.log(apiKey);
     console.log(`https://api.myanimelist.net/v2/users/${args.username}/animelist?fields=list_status&limit=100&offset=${args.offset}`);
